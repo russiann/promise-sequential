@@ -29,7 +29,7 @@ sequencial(items)
 
 There is only one difference between Promise.all usage and promise-sequencial usage: promise-sequencial receive an Array of functions that each returns a promise.
 
-Each function brings four params:
+Each function brings three params:
 
 | Name              | Description                                                  |
 | ----------------- | ------------------------------------------------------------ |
@@ -52,7 +52,7 @@ sequencial(array.map((item) => {
         resolve(item)
       }, 1000)
     })
-    
+
   }
 }))
 .then(res => {
