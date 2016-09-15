@@ -15,8 +15,8 @@ const sequencial = require('promise-sequencial');
 const array = [1,2,3,4,5];
 
 sequencial(array.map((item) => {
-  return function(previousResponse) {
-    console.log(previousResponse, responses, count); // will print previous response
+  return function(previousResponse, responses, count) {
+    
     return new Promise(resolve => {
       setTimeout(() => {
         resolve(item)
