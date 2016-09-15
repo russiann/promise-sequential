@@ -14,7 +14,7 @@ describe('sequentially promises', () => {
 
     let promises = [1,2].map((item) => {
 
-      return function (previousResponse) {
+      return function (previousResponse, results, count) {
         return new Promise(resolve => {
           setTimeout(function () {
             resolve(item)
@@ -26,7 +26,6 @@ describe('sequentially promises', () => {
     const array = [1,2,3,4]
     promiseq(promises)
       .then(res => {
-        console.log(res);
         expect(res).to.be.instanceof(Array);
         done();
       });
