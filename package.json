@@ -1,0 +1,30 @@
+{
+  "name": "promise-sequencial",
+  "version": "1.0.0",
+  "description": "Simple like Promise.all(), but sequentially!",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha test --timeout 15000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/russiann/promise-sequencial.git"
+  },
+  "keywords": [
+    "promise",
+    "queue",
+    "seq",
+    "sequence",
+    "sequential"
+  ],
+  "author": "Russian Rebouças",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/russiann/promise-sequencial/issues"
+  },
+  "homepage": "https://github.com/russiann/promise-sequencial#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.0.2"
+  }
+}
