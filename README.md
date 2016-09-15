@@ -1,6 +1,10 @@
 # promise-sequencial
 Simple like Promise.all(), but sequentially!
 
+[![NPM version](https://badge.fury.io/js/promise-sequencial.png)](http://badge.fury.io/js/promise-sequencial)
+
+[![Npm Downloads](https://nodei.co/npm/promise-sequencial.png?downloads=true&stars=true)](https://nodei.co/npm/promise-sequencial.png?downloads=true&stars=true)
+
 
 ## Installation
 
