@@ -13,9 +13,8 @@ module.exports = function (promises) {
       return previousPromise
         .then(function (result) {
           if (count++ !== 0) results = results.concat(result);
-          return result;
+          return currentPromise(result, results, count);
         })
-        .then(currentPromise)
         .catch((err) => {
           return reject(err);
         });
