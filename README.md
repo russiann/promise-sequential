@@ -1,20 +1,20 @@
-# promise-sequencial
+# promise-sequential
 Simple like Promise.all(), but sequentially!
 
-[![NPM version](https://badge.fury.io/js/promise-sequencial.png)](http://badge.fury.io/js/promise-sequencial)
+[![NPM version](https://badge.fury.io/js/promise-sequential.png)](http://badge.fury.io/js/promise-sequential)
 
-[![Npm Downloads](https://nodei.co/npm/promise-sequencial.png?downloads=true&stars=true)](https://nodei.co/npm/promise-sequencial.png?downloads=true&stars=true)
+[![Npm Downloads](https://nodei.co/npm/promise-sequential.png?downloads=true&stars=true)](https://nodei.co/npm/promise-sequential.png?downloads=true&stars=true)
 
 
 ## Installation
 
 ```
-npm install --save promise-sequencial
+npm install --save promise-sequential
 ```
 ## Usage
 
 ```js
-const sequencial = require('promise-sequencial');
+const sequential = require('promise-sequential');
 
 const items = [
   () => new Promise( ... )
@@ -22,7 +22,7 @@ const items = [
   () => new Promise( ... )
 ];
 
-sequencial(items)
+sequential(items)
 .then(res => {
   // ...
 })
@@ -31,7 +31,7 @@ sequencial(items)
 })
 ```
 
-There is only one difference between Promise.all usage and promise-sequencial usage: promise-sequencial receive an Array of functions that each returns a promise.
+There is only one difference between Promise.all usage and promise-sequential usage: promise-sequential receive an Array of functions that each returns a promise.
 
 Each function brings three params:
 
@@ -45,10 +45,10 @@ Each function brings three params:
 
 ```js
 
-const sequencial = require('promise-sequencial');
+const sequential = require('promise-sequential');
 const array = [1,2,3,4,5];
 
-sequencial(array.map((item) => {
+sequential(array.map((item) => {
   return function(previousResponse, responses, count) {
 
     return new Promise(resolve => {
