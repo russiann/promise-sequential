@@ -66,3 +66,5 @@ sequential(array.map((item) => {
   // ...
 })
 ```
+
+You can also use promise-sequential with non-native implementations of Promise by passing your custom Promise-like object as the second argument.

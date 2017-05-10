@@ -1,10 +1,10 @@
-module.exports = function (promises) {
+module.exports = function (promises, PromiseClass = Promise) {
 
   if (!Array.isArray(promises)) {
     throw new Error('First argument need to be an array of Promises');
   }
 
-  return new Promise((resolve, reject) => {
+  return new PromiseClass((resolve, reject) => {
 
     let count = 0;
     let results = [];
@@ -20,10 +20,10 @@ module.exports = function (promises) {
         });
     }
 
-    promises = promises.concat(() => Promise.resolve());
+    promises = promises.concat(() => PromiseClass.resolve());
 
     promises
-    .reduce(iterateeFunc, Promise.resolve(false))
+    .reduce(iterateeFunc, PromiseClass.resolve(false))
     .then(function (res) {
       resolve(results);
     })
