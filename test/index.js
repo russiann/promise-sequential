@@ -51,4 +51,32 @@ describe('sequentially promises', () => {
       })
   });
 
+  it('should not keep running after one of the promises throws error', (done) => {
+
+    const resolvedPromises = { p1: false, p2: false, p3: false };
+    const expectedResolvedPromises = { p1: true, p2: false, p3: false };
+
+    function updateResolvedPromises(key) {
+      return new Promise((resolve) => {
+        resolvedPromises[key] = true;
+        resolve();
+      });
+    }
+
+    const promises = [
+      () => updateResolvedPromises('p1'),
+
+      () => Promise.reject(),
+
+      () => updateResolvedPromises('p3'),
+    ];
+
+    Promise.resolve(promiseq(promises))
+    .catch(() => {
+      expect(resolvedPromises).to.deep.equal(expectedResolvedPromises);
+      done();
+    })
+
+  });
+
 })

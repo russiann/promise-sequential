@@ -16,9 +16,6 @@ module.exports = function (promises) {
           if (count++ !== 0) results = results.concat(result);
           return currentPromise(result, results, count);
         })
-        .catch((err) => {
-          return reject(err);
-        });
     }
 
     promises = promises.concat(() => Promise.resolve());
@@ -28,6 +25,9 @@ module.exports = function (promises) {
     .then(function (res) {
       resolve(results);
     })
+    .catch((err) => {
+      return reject(err);
+    });
 
   });
 };
