@@ -73,8 +73,8 @@ describe('sequentially promises', () => {
 
     Promise.resolve(
       promiseq(promises)
-      /* catching errors will force the .then of the wrapper promise to be called after the last
-         promise is executed */
+      /* catching errors will force the .then of the wrapper promise to be
+         called after the last promise is executed */
       .catch(() => {})
 
     )
