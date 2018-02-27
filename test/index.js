@@ -51,7 +51,7 @@ describe('sequentially promises', () => {
       })
   });
 
-  it('should not keep running after one of the promises throws error', (done) => {
+  it('should not keep running after one of the promises is rejected', (done) => {
 
     const resolvedPromises = { p1: false, p2: false, p3: false };
     const expectedResolvedPromises = { p1: true, p2: false, p3: false };
@@ -71,12 +71,17 @@ describe('sequentially promises', () => {
       () => updateResolvedPromises('p3'),
     ];
 
-    Promise.resolve(promiseq(promises))
-    .catch(() => {
+    Promise.resolve(
+      promiseq(promises)
+      /* catching errors will force the .then of the wrapper promise to be called after the last
+         promise is executed */
+      .catch(() => {})
+
+    )
+    .then(() => {
       expect(resolvedPromises).to.deep.equal(expectedResolvedPromises);
       done();
     })
-
   });
 
 })
