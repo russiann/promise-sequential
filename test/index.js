@@ -73,9 +73,32 @@ describe('sequentially promises', () => {
 
     Promise.resolve(
       promiseq(promises)
-      /* catching errors will force the .then of the wrapper promise to be
-         called after the last promise is executed */
-      .catch(() => {})
+      .catch(() => {
+        /*
+          This catch block exists in order to force the '.then' of the wrapper promise
+          (Promise.resolve(...) ) to execute. If the behavior this test is protecting against
+          occurs, promiseq will continue calling promises in sequence even after this
+          catch block was executed. After 'promiseq' is resolved, the expectations can be tested
+          inside the next '.then' block. Without this catch block, the catch block of
+          Promise.resolve(...) should be called immeditely, but it would not be possible to detect
+          if anything was executed afterwards.
+
+          Underneath the hood, promise-sequential uses a reduce function which originally called
+          every promise in the sequence in the following way:
+
+          updateResolvedPromises('p1').catch()
+          Promise.reject().catch(() => reject())   <--- Rejects 'promiseq' but reduce function not interrupted
+          updateResolvedPromises('p3').catch()     <--- will execute anyway
+
+          Instead, as soon as the first promise is rejected, the error thrown should interrup the
+          reduce function and bail out. E.g.
+
+          updateResolvedPromises('p1')
+          .then(Promise.reject())
+          .then(updateResolvedPromises('p3'))
+          .catch(() => reject())
+        */
+      })
 
     )
     .then(() => {
