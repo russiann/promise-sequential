@@ -33,13 +33,10 @@ module.exports = function (promises) {
       without re-throwing them. This hid the error from the 'reduce' function, which would continue
       to execute promises as if nothing happened. E.g.
 
-      [ () => p1.catch(), () => p2.catch(), () => p3.catch() ].reduce(...)
-        .then()
+       p1.catch().p2.catch().p3.catch()
 
       Instead, now as soon as an error is thrown, the sequential bails out. E.g.
-      [ () => p1, () => p2, () => p3 ].reduce(...)
-        .then()
-        .catch()  <-- after first reject, this catch will execute and 'reduce' halt
+      p1.p2.p3.catch
     */
     .catch((err) => {
       return reject(err);
