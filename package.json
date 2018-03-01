@@ -4,7 +4,7 @@
   "description": "Simple like Promise.all(), but sequentially!",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha test --timeout 3000"
+    "test": "./node_modules/.bin/mocha test --timeout 15000"
   },
   "repository": {
     "type": "git",
