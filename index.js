@@ -17,7 +17,7 @@ module.exports = function (promises) {
   }
 
   return promises
-  // reduce() concatenates the promises. E.g. p1.then(p2.then(p3.then()))
+  // reduce() concatenates the promises. E.g. p1.then(p2).then(p3)
   .reduce(iterateeFunc, Promise.resolve(false))
   .then(() => results)
 };
