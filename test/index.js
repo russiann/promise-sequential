@@ -23,16 +23,14 @@ describe('sequentially promises', () => {
       }
 
     });
-    const array = [1,2,3,4]
     promiseq(promises)
       .then(res => {
-        expect(res).to.be.instanceof(Array);
+        expect(res).to.be.instanceof(Array)
         done();
-      });
-
+      })
   });
 
-  it('should return 1 as param of catch function', (done) => {
+  it('should be able to catch value passed on reject of a promise', (done) => {
 
     let promises = [1,2].map((item) => {
       return function (previousResponse) {
@@ -49,6 +47,16 @@ describe('sequentially promises', () => {
         expect(err).to.equal(1);
         done();
       })
+  });
+
+  it('should handle case where input array is empty', (done) => {
+
+    const expectedResult = [];
+    promiseq([])
+      .then((res) => {
+        expect(res).to.deep.equal(expectedResult);
+        done();
+      });
   });
 
   it('should not keep running after one of the promises is rejected', (done) => {
@@ -81,16 +89,12 @@ describe('sequentially promises', () => {
       () => updateResolvedPromises('p3'),
     ];
 
-    Promise.resolve(
-      promiseq(promises)
-      // makes outer promise resolve only once promiseq is finished
+    promiseq(promises)
       .catch(() => {})
-
-    )
-    .then(() => {
-      expect(resolvedPromises).to.deep.equal(expectedResolvedPromises);
-      done();
-    })
+      .then(() => {
+        expect(resolvedPromises).to.deep.equal(expectedResolvedPromises);
+        done();
+      })
   });
 
 })
