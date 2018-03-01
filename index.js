@@ -31,24 +31,15 @@ module.exports = function (promises) {
 
       Previously, the code used to handle errors the promise sequence within the reduce function,
       without re-throwing them. This hid the error from the 'reduce' function, which would continue
-      to execute promises as if nothing happened.
+      to execute promises as if nothing happened. E.g.
 
-      // underneath the hood the code looked like this
-      [ () => p1.catch()
-        () => p2.catch()
-        () => p3.catch()
-      ].reduce(...)
+      [ () => p1.catch(), () => p2.catch(), () => p3.catch() ].reduce(...)
         .then()
 
-      Instead, now as soon as an error is thrown, the reduce function is halted and an outer catch
-      block handles the error. E.g.
-
-      [ () => p1
-        () => p2
-        () => p3
-      ].reduce(...)
-          .then()
-          .catch()  <-- after first reject, this catch will execute and 'reduce' halt
+      Instead, now as soon as an error is thrown, the sequential bails out. E.g.
+      [ () => p1, () => p2, () => p3 ].reduce(...)
+        .then()
+        .catch()  <-- after first reject, this catch will execute and 'reduce' halt
     */
     .catch((err) => {
       return reject(err);
