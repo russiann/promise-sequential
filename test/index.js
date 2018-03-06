@@ -10,9 +10,11 @@ describe('sequentially promises', () => {
     expect(func).to.throw('First argument need to be an array of Promises');
   });
 
-  it('should return an Array as response', (done) => {
+  it('should return an Array containing all promises resolved results as response', (done) => {
 
-    let promises = [1,2].map((item) => {
+    const vals = [1, 2, 3]
+
+    let promises = vals.map((item) => {
 
       return function (previousResponse, results, count) {
         return new Promise(resolve => {
@@ -25,7 +27,8 @@ describe('sequentially promises', () => {
     });
     promiseq(promises)
       .then(res => {
-        expect(res).to.be.instanceof(Array)
+        expect(res).to.be.instanceof(Array);
+        expect(res).to.eql(vals);
         done();
       })
   });
