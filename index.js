@@ -11,7 +11,7 @@ module.exports = function (promises) {
   const iterateeFunc = (previousPromise, currentPromise) => {
     return previousPromise
       .then(function (result) {
-        if (count++ !== 0) results = results.concat(result);
+        if (count++ !== 0) results.push(result);
         return currentPromise(result, results, count);
       })
   }
