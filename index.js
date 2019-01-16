@@ -5,29 +5,21 @@ module.exports = function (promises) {
     throw new Error('First argument need to be an array of Promises');
   }
 
-  return new Promise((resolve, reject) => {
+  let count = 0;
+  let results = [];
 
-    let count = 0;
-    let results = [];
+  const iterateeFunc = (previousPromise, currentPromise) => {
+    return previousPromise
+      .then(function (result) {
+        if (count++ !== 0) results.push(result);
+        return currentPromise(result, results, count);
+      })
+  }
 
-    const iterateeFunc = (previousPromise, currentPromise) => {
-      return previousPromise
-        .then(function (result) {
-          if (count++ !== 0) results = results.concat(result);
-          return currentPromise(result, results, count);
-        })
-        .catch((err) => {
-          return reject(err);
-        });
-    }
-
-    promises = promises.concat(() => Promise.resolve());
-
-    promises
-    .reduce(iterateeFunc, Promise.resolve(false))
-    .then(function (res) {
-      resolve(results);
-    })
-
-  });
+  return promises
+  // this call allows the last promises's resolved result to be obtained cleanly
+  .concat(() => Promise.resolve())
+  // reduce() concatenates the promises. E.g. p1.then(p2).then(p3)
+  .reduce(iterateeFunc, Promise.resolve(false))
+  .then(() => results)
 };
